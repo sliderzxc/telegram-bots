@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.concurrent.schedule
 
 suspend fun main() {
-    val token = "key"
+    val token = "6723098304:AAFiVn3teLzl49Gpfd9Kd799U-mO9f2yqBg"
     val bot = telegramBot(token)
 
     bot.buildBehaviourWithLongPolling {
