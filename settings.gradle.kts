@@ -1,3 +1,5 @@
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
     repositories {
         google()
@@ -14,5 +16,8 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "telegram-bots"
-include(":github-trending-repositories")
- 
+
+val githubTrendingRepositories = ":github-trending-repositories"
+
+include("$githubTrendingRepositories:core")
+include("$githubTrendingRepositories:utils")
