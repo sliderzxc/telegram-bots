@@ -1,4 +1,4 @@
-package com.sliderzxc.telegram.bot.github.trending.repositories.old.data.entities
+package com.sliderzxc.telegram.bot.github.trending.repositories.core.data.entities
 
 enum class ProgrammingLanguage(val language: String) {
     Core(""),
