@@ -8,33 +8,12 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.serialization.json.Json
 
 suspend fun main() = coroutineScope {
-
+    val token = ""
 
     val json = Json {
         ignoreUnknownKeys = true
     }
 
-    //bot.buildBehaviourWithLongPolling {
-//        periodicTask(TimeUnit.MINUTES.toMinutes(1)) {
-//            val data = GithubTrendingRepositoryImpl().getTrendingRepositories(ProgrammingLanguage.Kotlin)
-//            bot.sendTextMessage(
-//                chatId = IdChatIdentifier(-1002051124214),
-//                threadId = 2,
-//                text = "Hello world"
-//            )
-//            println(data.joinToString("\n"))
-//        }
-
-//        bot.sendTextMessage(
-//            chatId = IdChatIdentifier(-1002051124214),
-//            threadId = 2,
-//            text = "Hello world"
-//        )
-//
-//        onCommand("come") {
-//            reply(it, "Chat ID: ${it.chat.id}")
-//        }
-//    }.join()
     GithubTrendingRepositoriesBot(
         botToken = token,
         GetRepositoriesUseCase(GithubRepositoryImpl(json))

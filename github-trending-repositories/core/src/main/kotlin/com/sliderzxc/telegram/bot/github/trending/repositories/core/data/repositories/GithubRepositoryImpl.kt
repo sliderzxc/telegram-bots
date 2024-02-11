@@ -41,7 +41,7 @@ class GithubRepositoryImpl(
 
         val request = Request.Builder()
             .url(formattedUrl)
-            .header("Authorization", "Bearer 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")
+            .header("Authorization", "")
             .build()
 
         return try {
