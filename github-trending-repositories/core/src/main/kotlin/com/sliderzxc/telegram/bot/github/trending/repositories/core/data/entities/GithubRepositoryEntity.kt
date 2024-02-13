@@ -1,5 +1,7 @@
 package com.sliderzxc.telegram.bot.github.trending.repositories.core.data.entities
 
+import dev.inmo.tgbotapi.types.message.textsources.bold
+import dev.inmo.tgbotapi.types.message.textsources.link
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -13,18 +15,17 @@ data class GithubRepositoryEntity(
     val owner: GithubRepositoryOwner? = null
 ) {
     fun formatToString(): String {
-
-        //return "\uD83D\uDCCB Name: $name ($html_url)\n" +
-        return "\uD83D\uDCCB Name: <a href=\"$html_url\">$name</a>\n" +
-        "\uD83D\uDCDD Description: $description\n" +
-        "\uD83D\uDC64 Author: ${owner?.login}\n" +
-        "\uD83C\uDF10 Language: $language\n" +
-        "⭐\uFE0F Stars: $stargazers_count\n" +
-        "\uD83C\uDF74 Forks: $forks"
+        return "\uD83D\uDCCB" + bold("Name: ").html + link(name.toString(), html_url.toString()).html + "\n" +
+                "\uD83D\uDCDD" + bold("Description: ").html + "$description\n" +
+                "\uD83D\uDC64" + bold("Author: ").html + "${owner?.login}\n" +
+                "\uD83C\uDF10" + bold("Language: ").html + "$language\n" +
+                "⭐\uFE0F" + bold("Stars: ").html + "$stargazers_count\n" +
+                "\uD83C\uDF74" + bold("Forks: ").html + "$forks\n"
     }
 }
 
+
 @Serializable
 data class GithubRepositoryOwner(
-    val login: String? = null
+    val login: String? = null,
 )

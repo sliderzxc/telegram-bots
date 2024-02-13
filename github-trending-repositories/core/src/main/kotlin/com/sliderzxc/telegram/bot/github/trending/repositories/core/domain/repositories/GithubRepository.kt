@@ -8,5 +8,5 @@ interface GithubRepository {
         programmingLanguage: ProgrammingLanguage = ProgrammingLanguage.Core
     ): List<String>
 
-    suspend fun getInfoByRepository(url: String): GithubRepositoryEntity
+    suspend fun getInfoByRepository(url: String, githubToken: String): GithubRepositoryEntity
 }

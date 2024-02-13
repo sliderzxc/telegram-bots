@@ -15,25 +15,30 @@ class GithubRepositoryImpl(
     override suspend fun getTrendingRepositoriesUrls(
         programmingLanguage: ProgrammingLanguage
     ): List<String> {
-        val url = "https://github.com/trending/${programmingLanguage.language}"
+        val baseUrl = "https://github.com/trending/${programmingLanguage.language}"
+        val codeWord = "stargazers"
 
-        return try {
-            val document = Jsoup.connect(url).get()
+        return runCatching {
+            val document = Jsoup.connect(baseUrl).get()
 
-            val codeWord = "stargazers"
-            document.select("a[href]").map {
-                it.attr("href")
-            }.filter { it.contains(codeWord) }.map { repositoryId ->
-                "https://github.com${repositoryId.replace(codeWord, "")}"
-            }
+            document.select("a[href]")
+                .map { it.attr("href") }
+                .filter { it.contains(codeWord) }
+                .flatMap { repositoryId ->
+                    listOf("https://github.com${repositoryId.replace(codeWord, "")}")
+                }
 
-        } catch (e: Exception) {
-            println("message: ${e.message}")
+        }.getOrElse {
+            println("message: ${it.message}")
             emptyList()
         }
     }
 
-    override suspend fun getInfoByRepository(url: String): GithubRepositoryEntity {
+
+    override suspend fun getInfoByRepository(
+        url: String,
+        githubToken: String
+    ): GithubRepositoryEntity {
         val formattedUrl = "https://api.github.com/repos/${url.removePrefix("https://github.com/").removeSuffix("/")}"
         println(formattedUrl)
 
@@ -41,18 +46,18 @@ class GithubRepositoryImpl(
 
         val request = Request.Builder()
             .url(formattedUrl)
-            .header("Authorization", "")
+            .header("Authorization", githubToken)
             .build()
+
+        println(request.headers.joinToString())
 
         return try {
             val response: Response = client.newCall(request).execute()
 
             if (response.isSuccessful) {
                 val responseBody = response.body?.string()
-                val entity = json.decodeFromString<GithubRepositoryEntity>(responseBody!!)
-                entity
+                json.decodeFromString<GithubRepositoryEntity>(responseBody!!)
             } else {
-                // Handle non-success response codes here
                 throw IllegalStateException("GitHub API request failed with status code ${response.code}")
             }
         } catch (e: Exception) {
