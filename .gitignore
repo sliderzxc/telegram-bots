@@ -9,6 +9,7 @@
 
 # Java class files
 *.class
+github-trending-repositories/core/.env
 
 # Generated files
 bin/

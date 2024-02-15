@@ -9,3 +9,4 @@ tgbotapi = { group = "dev.inmo", name = "tgbotapi", version.ref = "tgbotapi" }
 [plugins]
 #jetbrains
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+shadow-jar = { id = "com.github.johnrengelman.shadow", version.require = "8.1.1" }

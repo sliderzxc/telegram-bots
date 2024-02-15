@@ -23,7 +23,8 @@ class GithubTrendingRepositoriesBot(
     }
 
     suspend fun start() = bot.buildBehaviourWithLongPolling {
-        periodicTask(10000000) {
+        // 86_400_000 is 1 day in milliseconds
+        periodicTask(86_400_000) {
             AllProgrammingLanguages.forEach { language ->
                 val repositoriesData = getRepositoriesUseCase.invoke(
                     programmingLanguage = language,
